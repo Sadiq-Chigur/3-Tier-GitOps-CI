@@ -196,12 +196,19 @@ jobs:
             = "sadiqdevops/frontend:" + strenv(IMAGE_TAG)
           ' k8s-prod/frontend.yaml
 
-      - name: Commit & push to CD repo
-        working-directory: cd
+      - name: Configure Git
         run: |
           git config user.name "ci-bot"
           git config user.email "ci-bot@users.noreply.github.com"
           git remote set-url origin https://x-access-token:${GH_PAT}@github.com/Sadiq-Chigur/3-Tier-GitOps-CD.git
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+      
+      - name: Commit and push changes
+        run: |
           git add -A
           git commit -m "bump images to ${IMAGE_TAG}" || echo "no changes"
           git push
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+          GH_PAT: ${{ secrets.GH_PAT }}
