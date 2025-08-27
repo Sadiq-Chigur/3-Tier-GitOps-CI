@@ -200,7 +200,7 @@ jobs:
         working-directory: cd
         run: |
           git config user.name "ci-bot"
-          git config user.email "ci-bot@users.noreply.github.com"
+          git config user.email "sadiq8089@gmail.com"
           git add -A
           git commit -m "bump images to ${IMAGE_TAG}" || echo "no changes"
           git push
